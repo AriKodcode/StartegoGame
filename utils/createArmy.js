@@ -1,6 +1,6 @@
-import createSoldier from './createSoldire.js';
+import createSoldier from "./createSoldire.js";
 
-export default function cretaeArmy(player) {
+export default function createArmy(player) {
   let soldiers = [];
   const soldiersObj = [
     { rank: 1, amout: 1 },
@@ -17,8 +17,8 @@ export default function cretaeArmy(player) {
     { rank: 'flag', amout: 1 },
   ];
   for (let i = 0; i < soldiersObj.length; i++) {
-    for (let j = 0; j < soldiersObj[i]['amout']; j++) {
-      let soldier = createSoldier(soldiersObj[i]['rank'], player);
+    for (let j = 0; j < soldiersObj[i]["amout"]; j++) {
+      let soldier = createSoldier(soldiersObj[i]["rank"], player);
       soldiers.push(soldier);
     }
   }
