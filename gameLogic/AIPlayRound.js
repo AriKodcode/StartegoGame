@@ -1,82 +1,213 @@
-import whoIsWinning from "./whoIsWinnig.js";
+import whoIsWinning from './whoIsWinnig.js';
 
-export default function AIplayround(board) {
-  let row = Math.floor(Math.random * 10);
-  let col = Math.floor(Math.random * 10);
-  while (board[row][col]["belongTo"] !== "AI") {
-    row = Math.floor(Math.random * 10);
-    col = Math.floor(Math.random * 10);
-  }
-  ifCanMove(board, row, col);
-}
+export default function aiplayround(bord) {
+  let win = false;
+  let gameBord = bord;
+  let game = true;
+  while (game) {
+    let row = Math.floor(Math.random() * 10);
+    let col = Math.floor(Math.random() * 10);
+    if (
+      gameBord[row][col] !== '🟫' &&
+      gameBord[row][col] !== '🟦' &&
+      gameBord[row][col]['belongTo'] === 'AI'
+    ) {
+      let arr1 = ['r', 'l', 'f', 'b'];
+      let rnd = [];
+      let keys = arr1.map((a, b) => b);
+      while (keys.length) {
+        rnd.push(arr1[keys.splice(Math.floor(Math.random() * keys.length), 1)]);
+      }
+      for (let i = 0; i < arr1.length; i++) {
+        let choice = arr1[i];
+        if (choice === 'r') {
+          if (col + 1 !== 10) {
+            if (bord[row][col + 1] === '🟫') {
+              [bord[row][col], bord[row][col + 1]] = [
+                bord[row][col + 1],
+                bord[row][col],
+              ];
+              game = false;
+              break;
+            } else if (bord[row][col + 1] === '🟦') {
+              continue;
+            } else if (bord[row][col + 1]['belongTo'] === 'AI') {
+              continue;
+            } else if (bord[row][col + 1]['belongTo'] !== 'AI') {
+              console.log(`battle!!!
+                         player rank: ${bord[row][col + 1]['rank']}
+                         AI rank ${bord[row][col]['rank']}`);
 
-function ifCanMove(board, row, col) {
-  const listMovements = ["back", "left", "right", "forward"];
-  let num = Math.floor(MFath.random * 4);
-  let random = listMovements[num];
-  if (random == "forward") {
-    if (row + 1 < 10 && board[row + 1][col] === "🟫") {
-      [board[row][col], board[row + 1][col]] = [
-        board[row + 1][col],
-        board[row][col],
-      ];
-    } else if (board[row + 1][col]["belongTo"] === "player") {
-      let win = whoIsWinning(board[row][col], board[row + 1]);
-      if (win === "attacker win") {
-        [board[row][col], board[row + 1][col]] = [`🟫`, board[row][col]];
-      } else if (win === `defender win`) {
-        [board[row][col], board[row + 1][col]] = [board[row + 1][col], "🟫"];
-      } else if (win === "draw") {
-        [board[row][col], board[row + 1][col]] = ["🟫", "🟫"];
-      }
-    }
-  } else if (random == "right") {
-    if (col + 1 < 10 && board[row][col + 1] === "🟫") {
-      [board[row][col], board[row][col + 1]] = [
-        board[row][col + 1],
-        board[row][col],
-      ];
-    } else if (board[row][col + 1]["belongTo"] === "player") {
-      let win = whoIsWinning(board[row][col], board[row + 1]);
-      if (win === "attacker win") {
-        [board[row][col], board[row][col + 1]] = [`🟫`, board[row][col]];
-      } else if (win === `defender win`) {
-        [board[row][col], board[row][col + 1]] = [board[row][col + 1], "🟫"];
-      } else if (win === "draw") {
-        [board[row][col], board[row][col + 1]] = ["🟫", "🟫"];
-      }
-    }
-  } else if (random == "left") {
-    if (col - 1 > 0 && board[row][col - 1] === "🟫") {
-      [board[row][col], board[row][col - 1]] = [
-        board[row][col - 1],
-        board[row][col],
-      ];
-    } else if (board[row][col - 1]["belongTo"] === "player") {
-      let win = whoIsWinning(board[row][col], board[row + -1]);
-      if (win === "attacker win") {
-        [board[row][col], board[row][col - 1]] = [`🟫`, board[row][col]];
-      } else if (win === `defender win`) {
-        [board[row][col], board[row][col - 1]] = [board[row][col - 1], "🟫"];
-      } else if (win === "draw") {
-        [board[row][col], board[row][col - 1]] = ["🟫", "🟫"];
-      }
-    }
-  } else if (random == "back") {
-    if (col - 1 > 0 && board[row - 1][col] === "🟫") {
-      [board[row][col], board[row - 1][col]] = [
-        board[row - 1][col],
-        board[row][col],
-      ];
-    } else if (board[row][col + 1]["belongTo"] === "player") {
-      let win = whoIsWinning(board[row][col], board[row - 1][col]);
-      if (win === "attacker win") {
-        [board[row][col], board[row - 1][col]] = [`🟫`, board[row][col]];
-      } else if (win === `defender win`) {
-        [board[row][col], board[row - 1][col]] = [board[row - 1][col], "🟫"];
-      } else if (win === "draw") {
-        [board[row][col], board[row - 1][col]] = ["🟫", "🟫"];
+              let battle = whoIsWinning(bord[row][col], bord[row][col + 1]);
+              if (battle === 'attacker win') {
+                console.log(`AI rank ${bord[row][col]['rank']} win`);
+                bord[row][col + 1] = bord[row][col];
+                bord[row][col] = '🟫';
+                game = false;
+                break;
+              } else if (battle === 'defender win') {
+                console.log(`AI rank ${bord[row][col]['rank']} loose`);
+                bord[row][col] = '🟫';
+                game = false;
+                break;
+              } else if (battle === 'draw') {
+                console.log('Draw, you two are dead.');
+                [bord[row][col], bord[row][col + 1]] = ['🟫', '🟫'];
+                game = false;
+                break;
+              } else if (
+                battle === `${bord[row][col]['belongTo']} win the game`
+              ) {
+                win = true;
+                game = false;
+                break;
+              }
+            }
+          } else {
+            continue;
+          }
+        }
+        if (choice === 'l') {
+          if (col - 1 !== -1) {
+            if (bord[row][col - 1] === '🟫') {
+              [bord[row][col], bord[row][col - 1]] = [
+                bord[row][col - 1],
+                bord[row][col],
+              ];
+              game = false;
+              break;
+            } else if (bord[row][col - 1] === '🟦') {
+              continue;
+            } else if (bord[row][col - 1]['belongTo'] === 'AI') {
+              continue;
+            } else if (bord[row][col - 1]['belongTo'] !== 'AI') {
+              console.log(`battle!!!
+                         player rank: ${bord[row][col - 1]['rank']}
+                         AI rank ${bord[row][col]['rank']}`);
+
+              let battle = whoIsWinning(bord[row][col], bord[row][col - 1]);
+              if (battle === 'attacker win') {
+                console.log(`AI rank ${bord[row][col]['rank']} win`);
+                bord[row][col - 1] = bord[row][col];
+                bord[row][col] = '🟫';
+                game = false;
+                break;
+              } else if (battle === 'defender win') {
+                console.log(`AI rank ${bord[row][col]['rank']} loose`);
+                bord[row][col] = '🟫';
+                game = false;
+                break;
+              } else if (battle === 'draw') {
+                console.log('Draw, you two are dead.');
+                [bord[row][col], bord[row][col - 1]] = ['🟫', '🟫'];
+                game = false;
+                break;
+              } else if (
+                battle === `${bord[row][col]['belongTo']} win the game`
+              ) {
+                win = true;
+                game = false;
+                break;
+              }
+            }
+          } else {
+            continue;
+          }
+        }
+        if (choice === 'f') {
+          if (row - 1 !== -1) {
+            if (bord[row - 1][col] === '🟫') {
+              [bord[row][col], bord[row - 1][col]] = [
+                bord[row - 1][col],
+                bord[row][col],
+              ];
+              game = false;
+              break;
+            } else if (bord[row - 1][col] === '🟦') {
+              continue;
+            } else if (bord[row - 1][col]['belongTo'] === 'AI') {
+              continue;
+            } else if (bord[row - 1][col]['belongTo'] !== 'AI') {
+              console.log(`battle!!!
+                         player rank: ${bord[row - 1][col]['rank']}
+                         AI rank ${bord[row][col]['rank']}`);
+              let battle = whoIsWinning(bord[row][col], bord[row - 1][col]);
+              if (battle === 'attacker win') {
+                console.log(`AI rank ${bord[row][col]['rank']} win`);
+                bord[row - 1][col] = bord[row][col];
+                bord[row][col] = '🟫';
+                game = false;
+                break;
+              } else if (battle === 'defender win') {
+                console.log(`AI rank ${bord[row][col]['rank']} loose`);
+                bord[row][col] = '🟫';
+                game = false;
+                break;
+              } else if (battle === 'draw') {
+                console.log('Draw, you two are dead.');
+                [bord[row][col], bord[row - 1][col]] = ['🟫', '🟫'];
+                game = false;
+                break;
+              } else if (
+                battle === `${bord[row][col]['belongTo']} win the game`
+              ) {
+                win = true;
+                game = false;
+                break;
+              }
+            }
+          } else {
+            continue;
+          }
+        }
+        if (choice === 'b') {
+          if (row + 1 !== 10) {
+            if (bord[row + 1][col] === '🟫') {
+              [bord[row][col], bord[row + 1][col]] = [
+                bord[row + 1][col],
+                bord[row][col],
+              ];
+              game = false;
+              break;
+            } else if (bord[row + 1][col] === '🟦') {
+              continue;
+            } else if (bord[row + 1][col]['belongTo'] === 'AI') {
+              continue;
+            } else if (bord[row + 1][col]['belongTo'] !== 'AI') {
+              console.log(`battle!!!
+                         player rank: ${bord[row + 1][col]['rank']}
+                         AI rank ${bord[row][col]['rank']}`);
+              let battle = whoIsWinning(bord[row][col], bord[row + 1][col]);
+              if (battle === 'attacker win') {
+                console.log(`AI rank ${bord[row][col]['rank']} win`);
+                bord[row + 1][col] = bord[row][col];
+                bord[row][col] = '🟫';
+                game = false;
+                break;
+              } else if (battle === 'defender win') {
+                console.log(`AI rank ${bord[row][col]['rank']} loose`);
+                bord[row][col] = '🟫';
+                game = false;
+                break;
+              } else if (battle === 'draw') {
+                console.log('Draw, you two are dead.');
+                [bord[row][col], bord[row + 1][col]] = ['🟫', '🟫'];
+                game = false;
+                break;
+              } else if (
+                battle === `${bord[row][col]['belongTo']} win the game`
+              ) {
+                win = true;
+                game = false;
+                break;
+              }
+            }
+          } else {
+            continue;
+          }
+        }
       }
     }
   }
+  return win;
 }
