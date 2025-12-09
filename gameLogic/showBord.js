@@ -1,5 +1,5 @@
 export default function showBord(bord) {
-  let newBord = [...bord];
+  let newBord = structuredClone(bord);
   for (let i = 0; i < newBord.length; i++) {
     for (let j = 0; j < newBord[i].length; j++) {
       if (
