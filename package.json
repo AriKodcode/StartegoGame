@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/AriKodcode/StartegoGame/issues"
   },
-  "homepage": "https://github.com/AriKodcode/StartegoGame#readme"
+  "homepage": "https://github.com/AriKodcode/StartegoGame#readme",
+  "dependencies": {
+    "analiza-sync": "^1.0.1"
+  }
 }
