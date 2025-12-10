@@ -21,15 +21,23 @@ Installations:
 
 You need to install the library
 
-> npm install analiza-sync
+```
+npm install analiza-sync
+```
 
 #
 
 The game is run by the command:
 
-> node app.js
+```
+node app.js
+```
 
 So the game starts. You start first. You choose soldiers by the row and column of each soldier. You can move a soldier one step each turn. If you find the enemy's flag, you win.
+
+#
+
+> link for game info [statego](https://en.wikipedia.org/wiki/Stratego)
 
 #
 
