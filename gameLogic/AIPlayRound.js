@@ -19,7 +19,7 @@ export default function aiplayround(bord) {
         rnd.push(arr1[keys.splice(Math.floor(Math.random() * keys.length), 1)]);
       }
       for (let i = 0; i < arr1.length; i++) {
-        let choice = arr1[i];
+        let choice = rnd[i];
         if (choice === 'r') {
           if (col + 1 !== 10) {
             if (bord[row][col + 1] === '🟫') {
