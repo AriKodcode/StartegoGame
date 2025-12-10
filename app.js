@@ -6,7 +6,6 @@ import arrgeneSoldiersPlayer from './gameLogic/arrgeneSoldiersPlayer.js';
 import showBord from './gameLogic/showBord.js';
 import aiplayround from './gameLogic/AIPlayRound.js';
 import playerPlayRound from './gameLogic/playerPlayRound.js';
-import input from 'analiza-sync';
 import { log, table } from 'console';
 
 function app() {

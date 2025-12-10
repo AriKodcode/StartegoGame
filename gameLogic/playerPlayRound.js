@@ -1,12 +1,24 @@
 import input from 'analiza-sync';
 import whoIsWinning from './whoIsWinnig.js';
+import { log } from 'console';
 
 export default function playerPlayRound(bord) {
   let flag = true;
   let win = false;
   while (flag) {
-    let row = Number(input('Enter your row: '));
-    let col = Number(input('Enter your column: '));
+    let rowCol = true;
+    let row;
+    let col;
+    while (rowCol) {
+      row = Number(input('Enter your row: '));
+      col = Number(input('Enter your column: '));
+      if (!isNaN(row) && !isNaN(col)) {
+        rowCol = false;
+      } else {
+        console.log('Enter numbers only');
+      }
+    }
+
     let gameBord = bord;
     if (
       bord[row][col]['rank'] === 'boom' ||
